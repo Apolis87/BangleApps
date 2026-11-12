@@ -13,6 +13,8 @@
   "readme": "README.md",
   "storage": [
     {"name":"sonic3clk.app.js","url":"app.js"},
-    {"name":"sonic3clk.img","url":"app-icon.js","evaluate":true}
-  ]
+    {"name":"sonic3clk.img","url":"app-icon.js","evaluate":true},
+    {"name":"sonic3clk.settings.js","url":"settings.js"}
+  ],
+  "data": [{"name":"sonic3clk.settings.json"}]
 }

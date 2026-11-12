@@ -327,10 +327,11 @@ const draw = (action) => {
 };
 
 // Settings
-const settings = require("Storage").readJSON("sonic3clk-settings") || {
-  activeMode: false,
-  twistThreshold: 1600,
-};
+const settings = require("Storage").readJSON("sonic3clk.settings.json", 1) ||
+  require("Storage").readJSON("sonic3clk-settings", 1) || {
+    activeMode: false,
+    twistThreshold: 1600,
+  };
 let isSettings = false;
 
 const settingsMenu = {
@@ -349,7 +350,7 @@ const settingsMenu = {
   Exit: () => {
     isSettings = false;
 
-    require("Storage").writeJSON("sonic3clk-settings", settings);
+    require("Storage").writeJSON("sonic3clk.settings.json", settings);
     Bangle.setOptions({
       lockTimeout: 10000,
       backlightTimeout: 12000,
@@ -385,13 +386,16 @@ Bangle.on("twist", () => {
   }
 });
 
-Bangle.on("tap", (d) => {
-  if (d.double && d.dir === "top") {
+let lastTouch = 0;
+Bangle.on("touch", (zone, e) => {
+  if (Bangle.isLocked() || isSettings) return;
+  const now = Date.now();
+  if ((!e || e.y < 60) && now - lastTouch < 500) {
     fullReset();
     isSettings = true;
-    Bangle.setLocked(false);
     E.showMenu(settingsMenu);
   }
+  lastTouch = now;
 });
 
 Bangle.setOptions({
