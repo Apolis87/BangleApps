@@ -2,7 +2,7 @@
   "id": "sonic3clk",
   "name": "Sonic 3 Clock",
   "version": "0.01",
-  "author": "jon",
+  "author": "Apolis87",
   "description": "A Sonic 3 themed clock featuring run, stop and wait animations.",
   "icon": "app.png",
   "screenshots": [{"url":"screenshot.png"}],
