@@ -37,6 +37,25 @@ const MAC16 = [
   0xdd0000, 0xff6600, 0xffff00, 0xffffff,
 ];
 
+const SONIC_PALETTE = [
+  0x000000, // 0: Black
+  0x000000, // 1: Transparent
+  0x888888, // 2: Grey
+  0xbbbbbb, // 3: Light Grey
+  0xB46C48, // 4: Skin Shadow (#B46C48)
+  0x703810, // 5: Deep Skin Crease Shadow (#703810)
+  0x006600, // 6: Green
+  0x00aa00, // 7: Bright Green
+  0x6C6CFC, // 8: Light Blue (#6C6CFC - Sonic 3 periwinkle highlight)
+  0x2448D8, // 9: Mid Blue (#2448D8 - Sonic 3 cobalt body)
+  0x330099, // 10: Deep Purple
+  0xff0099, // 11: Pink
+  0xFC0000, // 12: Shoe Red (#FC0000)
+  0xFCB490, // 13: Skin Peach (#FCB490 - Sonic 3 peach skin)
+  0xffff00, // 14: Buckle Yellow (#ffff00)
+  0xffffff  // 15: White (#ffffff)
+];
+
 const WEB = [
   0x000000,0x000033,0x000066,0x000099,0x0000cc,0x0000ff,0x003300,0x003333,0x003366,0x003399,0x0033cc,0x0033ff,0x006600,0x006633,0x006666,0x006699,0x0066cc,0x0066ff,0x009900,0x009933,0x009966,0x009999,0x0099cc,0x0099ff,0x00cc00,0x00cc33,0x00cc66,0x00cc99,0x00cccc,0x00ccff,0x00ff00,0x00ff33,0x00ff66,0x00ff99,0x00ffcc,0x00ffff,
   0x330000,0x330033,0x330066,0x330099,0x3300cc,0x3300ff,0x333300,0x333333,0x333366,0x333399,0x3333cc,0x3333ff,0x336600,0x336633,0x336666,0x336699,0x3366cc,0x3366ff,0x339900,0x339933,0x339966,0x339999,0x3399cc,0x3399ff,0x33cc00,0x33cc33,0x33cc66,0x33cc99,0x33cccc,0x33ccff,0x33ff00,0x33ff33,0x33ff66,0x33ff99,0x33ffcc,0x33ffff,
@@ -46,10 +65,10 @@ const WEB = [
   0xff0000,0xff0033,0xff0066,0xff0099,0xff00cc,0xff00ff,0xff3300,0xff3333,0xff3366,0xff3399,0xff33cc,0xff33ff,0xff6600,0xff6633,0xff6666,0xff6699,0xff66cc,0xff66ff,0xff9900,0xff9933,0xff9966,0xff9999,0xff99cc,0xff99ff,0xffcc00,0xffcc33,0xffcc66,0xffcc99,0xffcccc,0xffccff,0xffff00,0xffff33,0xffff66,0xffff99,0xffffcc,0xffffff,
 ];
 
-function decodeBufferToRGBA(b64, width, height, bpp, transparent) {
+function decodeBufferToRGBA(b64, width, height, bpp, transparent, type = "sprite") {
   const compressed = Uint8Array.from(Buffer.from(b64, "base64"));
   const raw = heatshrink.decompress(compressed);
-  const palette = bpp === 4 ? MAC16 : WEB;
+  const palette = bpp === 4 ? (type === "sprite" ? SONIC_PALETTE : MAC16) : WEB;
   const rgba = Buffer.alloc(width * height * 4);
 
   let p = 0;
@@ -125,7 +144,8 @@ function encodePNGToHeatshrinkB64(inPath, type = "sprite", targetBpp, targetTran
   const transparent = targetTransparent !== undefined ? targetTransparent : (type === "bg" ? undefined : 1);
 
   // Build palette where the transparent index is excluded from opaque pixel matching
-  const palette = (bpp === 4 ? MAC16 : WEB).slice();
+  const basePalette = type === "sprite" ? SONIC_PALETTE : (bpp === 4 ? MAC16 : WEB);
+  const palette = basePalette.slice();
   if (transparent !== undefined && transparent < palette.length) {
     palette[transparent] = null;
   }
