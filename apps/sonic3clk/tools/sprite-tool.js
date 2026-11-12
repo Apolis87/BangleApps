@@ -46,8 +46,8 @@ const SONIC_PALETTE = [
   0x703810, // 5: Deep Skin Crease Shadow (#703810)
   0x006600, // 6: Green
   0x00aa00, // 7: Bright Green
-  0x6C6CFC, // 8: Light Blue (#6C6CFC - Sonic 3 periwinkle highlight)
-  0x2448D8, // 9: Mid Blue (#2448D8 - Sonic 3 cobalt body)
+  0x0000FF, // 8: Highlight Blue (#0000FF - 100% Solid Blue, 0% Red, 0% Green)
+  0x0000AA, // 9: Body Blue (#0000AA - Deep Blue, 0% Red, 0% Green)
   0x330099, // 10: Deep Purple
   0xff0099, // 11: Pink
   0xFC0000, // 12: Shoe Red (#FC0000)

@@ -1,7 +1,7 @@
 const vw = g.getWidth();
 const bgWidth = 384;
 
-const sonicPalette = new Uint16Array(E.toArrayBuffer(E.toFlatString(atob("AAAAAFGM171ps8JxIANABX9rWyITMBP4APiy/eD///8="))));
+const sonicPalette = new Uint16Array(E.toArrayBuffer(E.toFlatString(atob("AAAAAFGM171ps8JxIANABR8AFQATMBP4APiy/eD///8="))));
 const sonic = {
   bpp: 4,
   transparent: 1,
