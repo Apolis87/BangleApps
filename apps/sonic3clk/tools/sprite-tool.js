@@ -42,18 +42,37 @@ const SONIC_PALETTE = [
   0x000000, // 1: Transparent
   0x888888, // 2: Grey
   0xbbbbbb, // 3: Light Grey
-  0xB46C48, // 4: Skin Shadow (#B46C48)
-  0x703810, // 5: Deep Skin Crease Shadow (#703810)
+  0xC86018, // 4: Skin Shadow (#C86018 - warm caramel shadow)
+  0x883808, // 5: Deep Skin Crease Shadow (#883808 - warm brown)
   0x006600, // 6: Green
   0x00aa00, // 7: Bright Green
-  0x0000FF, // 8: Highlight Blue (#0000FF - 100% Solid Blue, 0% Red, 0% Green)
-  0x0000AA, // 9: Body Blue (#0000AA - Deep Blue, 0% Red, 0% Green)
+  0x00B8FF, // 8: Highlight Blue (#00B8FF - bright electric azure, 0% Red)
+  0x0055FF, // 9: Body Blue (#0055FF - vivid cobalt blue, 0% Red)
   0x330099, // 10: Deep Purple
   0xff0099, // 11: Pink
   0xFC0000, // 12: Shoe Red (#FC0000)
-  0xFCB490, // 13: Skin Peach (#FCB490 - Sonic 3 peach skin)
+  0xFFA848, // 13: Skin Peach (#FFA848 - vibrant golden peach)
   0xffff00, // 14: Buckle Yellow (#ffff00)
   0xffffff  // 15: White (#ffffff)
+];
+
+const BG_PALETTE = [
+  0x000000, // 0: Black outline / deep shadow
+  0x240000, // 1: Soil / deep root shadow
+  0x008800, // 2: Deep canopy shadow (rich forest green)
+  0x00B400, // 3: Mid canopy green
+  0x00E000, // 4: Lush emerald canopy green
+  0x44FC00, // 5: Vibrant lime canopy highlight
+  0x24FC24, // 6: Bright mint canopy highlight
+  0x6C2400, // 7: Dark trunk bark shadow
+  0xC05000, // 8: Warm trunk brown
+  0xF07800, // 9: Bright golden trunk wood
+  0xFFD800, // 10: Golden sand / grass flower
+  0xFFFF00, // 11: Vibrant sunny yellow
+  0x0055FF, // 12: Vibrant blue flower
+  0x00B8FF, // 13: Bright azure flower highlight
+  0x00FCFC, // 14: Electric cyan flower center
+  0xFFFFFF  // 15: White cloud / sparkle
 ];
 
 const WEB = [
@@ -144,7 +163,7 @@ function encodePNGToHeatshrinkB64(inPath, type = "sprite", targetBpp, targetTran
   const transparent = targetTransparent !== undefined ? targetTransparent : (type === "bg" ? undefined : 1);
 
   // Build palette where the transparent index is excluded from opaque pixel matching
-  const basePalette = type === "sprite" ? SONIC_PALETTE : (bpp === 4 ? MAC16 : WEB);
+  const basePalette = type === "sprite" ? SONIC_PALETTE : (type === "bg" ? BG_PALETTE : (bpp === 4 ? MAC16 : WEB));
   const palette = basePalette.slice();
   if (transparent !== undefined && transparent < palette.length) {
     palette[transparent] = null;
@@ -318,10 +337,16 @@ function pack() {
   block += `];\n\n`;
 
   const transLine = bgEnc.transparent !== undefined ? `  transparent: ${bgEnc.transparent},\n` : "";
-  block += `const bg = {\n  width: ${bgEnc.width},\n  height: ${bgEnc.height},\n  bpp: ${bgEnc.bpp},\n${transLine}  buffer: require("heatshrink").decompress(atob("${bgEnc.b64}")),\n};`;
+  block += `const bgPalette = new Uint16Array(E.toArrayBuffer(E.toFlatString(atob("AAAAIEAEoAUAB+BH5CcgaYDCwPPA/uD/vwLfBf8H//8="))));\n`;
+  block += `const bg = {\n  width: ${bgEnc.width},\n  height: ${bgEnc.height},\n  bpp: ${bgEnc.bpp},\n  palette: bgPalette,\n${transLine}  buffer: require("heatshrink").decompress(atob("${bgEnc.b64}")),\n};`;
 
   let code = fs.readFileSync(APP_JS, "utf8");
   code = code.replace(/const bgWidth = \d+;/, `const bgWidth = ${bgEnc.width};`);
+  code = code.replace(
+    /const sonicPalette = new Uint16Array\(E\.toArrayBuffer\(E\.toFlatString\(atob\("[^"]+"\)\)\)\);/,
+    'const sonicPalette = new Uint16Array(E.toArrayBuffer(E.toFlatString(atob("AAAAAFGM170Dy8GJIANABd8FvwITMBP4APhJ/eD///8="))));'
+  );
+  code = code.replace(/g\.setTheme\(\{ bg: "[^"]+", fg: "#fff", dark: true \}\)\.clear\(\);/, 'g.setTheme({ bg: "#008800", fg: "#fff", dark: true }).clear();');
   code = code.replace(/const defaultSonic =[\s\S]*?(?=\n\nconst topSpeed =)/, block);
   fs.writeFileSync(APP_JS, code);
   console.log(`Updated ${APP_JS} from PNGs in ${ASSETS_DIR}`);
