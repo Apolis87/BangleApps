@@ -1,0 +1,18 @@
+{
+  "id": "sonic3clk",
+  "name": "Sonic 3 Clock",
+  "version": "0.01",
+  "author": "jon",
+  "description": "A Sonic 3 themed clock featuring run, stop and wait animations.",
+  "icon": "app.png",
+  "screenshots": [{"url":"screenshot.png"}],
+  "type": "clock",
+  "tags": "clock",
+  "supports": ["BANGLEJS2"],
+  "allow_emulator": true,
+  "readme": "README.md",
+  "storage": [
+    {"name":"sonic3clk.app.js","url":"app.js"},
+    {"name":"sonic3clk.img","url":"app-icon.js","evaluate":true}
+  ]
+}

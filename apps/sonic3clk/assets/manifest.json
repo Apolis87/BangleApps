@@ -1,0 +1,167 @@
+{
+  "defaultSonic": {
+    "file": "defaultSonic.png",
+    "width": 46,
+    "height": 62,
+    "bpp": 4,
+    "transparent": 1
+  },
+  "startingBuffers": [
+    {
+      "index": 0,
+      "role": "walk/accelerate buildup",
+      "file": "starting_00.png",
+      "width": 60,
+      "height": 62
+    },
+    {
+      "index": 1,
+      "role": "walk/accelerate buildup",
+      "file": "starting_01.png",
+      "width": 62,
+      "height": 60
+    },
+    {
+      "index": 2,
+      "role": "walk/accelerate buildup",
+      "file": "starting_02.png",
+      "width": 42,
+      "height": 62
+    },
+    {
+      "index": 3,
+      "role": "walk/accelerate buildup",
+      "file": "starting_03.png",
+      "width": 56,
+      "height": 60
+    },
+    {
+      "index": 4,
+      "role": "walk/accelerate buildup",
+      "file": "starting_04.png",
+      "width": 62,
+      "height": 62
+    },
+    {
+      "index": 5,
+      "role": "walk/accelerate buildup",
+      "file": "starting_05.png",
+      "width": 41,
+      "height": 60
+    },
+    {
+      "index": 6,
+      "role": "full-speed run loop (frames 6-9 loop)",
+      "file": "starting_06.png",
+      "width": 53,
+      "height": 60
+    },
+    {
+      "index": 7,
+      "role": "full-speed run loop (frames 6-9 loop)",
+      "file": "starting_07.png",
+      "width": 53,
+      "height": 60
+    },
+    {
+      "index": 8,
+      "role": "full-speed run loop (frames 6-9 loop)",
+      "file": "starting_08.png",
+      "width": 52,
+      "height": 60
+    },
+    {
+      "index": 9,
+      "role": "full-speed run loop (frames 6-9 loop)",
+      "file": "starting_09.png",
+      "width": 53,
+      "height": 60
+    }
+  ],
+  "stoppingBuffers": [
+    {
+      "index": 0,
+      "file": "stopping_00.png",
+      "width": 58,
+      "height": 60
+    },
+    {
+      "index": 1,
+      "file": "stopping_01.png",
+      "width": 57,
+      "height": 60
+    }
+  ],
+  "waitingBuffers": [
+    {
+      "index": 0,
+      "file": "waiting_00.png",
+      "width": 48,
+      "height": 62,
+      "offset": 0,
+      "role": "bored blink / transition"
+    },
+    {
+      "index": 1,
+      "file": "waiting_01.png",
+      "width": 51,
+      "height": 62,
+      "offset": 2,
+      "role": "hands on hips"
+    },
+    {
+      "index": 2,
+      "file": "waiting_02.png",
+      "width": 51,
+      "height": 62,
+      "offset": 2,
+      "role": "foot tap down (loop start)"
+    },
+    {
+      "index": 3,
+      "file": "waiting_03.png",
+      "width": 51,
+      "height": 62,
+      "offset": 2,
+      "role": "foot tap up"
+    },
+    {
+      "index": 4,
+      "file": "waiting_04.png",
+      "width": 51,
+      "height": 62,
+      "offset": 2,
+      "role": "finger wag 1"
+    },
+    {
+      "index": 5,
+      "file": "waiting_05.png",
+      "width": 51,
+      "height": 62,
+      "offset": 2,
+      "role": "finger wag 2"
+    },
+    {
+      "index": 6,
+      "file": "waiting_06.png",
+      "width": 52,
+      "height": 60,
+      "offset": 2,
+      "role": "beckon / wind up"
+    },
+    {
+      "index": 7,
+      "file": "waiting_07.png",
+      "width": 57,
+      "height": 60,
+      "offset": 5,
+      "role": "impatient point forward"
+    }
+  ],
+  "bg": {
+    "file": "bg.png",
+    "width": 384,
+    "height": 153,
+    "bpp": 4
+  }
+}
