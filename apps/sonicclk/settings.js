@@ -1,14 +1,15 @@
 (function (back) {
   const FILE = "sonicclk.settings.json";
-  const settings = Object.assign(
-    {
-      activeMode: false,
-      twistThreshold: 1600,
-      theme: "Classic",
-    },
+  const saved =
     require("Storage").readJSON(FILE, 1) ||
-      require("Storage").readJSON("sonicclk-settings", 1)
-  );
+    require("Storage").readJSON("sonicclk-settings", 1) ||
+    {};
+  const settings = {
+    activeMode: saved.activeMode === true,
+    twistThreshold:
+      typeof saved.twistThreshold === "number" ? saved.twistThreshold : 1600,
+    theme: saved.theme || "Classic",
+  };
 
   const writeSettings = () => {
     require("Storage").writeJSON(FILE, settings);

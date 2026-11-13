@@ -2,15 +2,18 @@ const vw = g.getWidth();
 const bgWidth = 384;
 
 // Settings
-const settings = Object.assign(
-  {
-    activeMode: false,
-    twistThreshold: 1600,
-    theme: "Classic",
-  },
+const savedSettings =
   require("Storage").readJSON("sonicclk.settings.json", 1) ||
-    require("Storage").readJSON("sonicclk-settings", 1)
-);
+  require("Storage").readJSON("sonicclk-settings", 1) ||
+  {};
+const settings = {
+  activeMode: savedSettings.activeMode === true,
+  twistThreshold:
+    typeof savedSettings.twistThreshold === "number"
+      ? savedSettings.twistThreshold
+      : 1600,
+  theme: savedSettings.theme || "Classic",
+};
 let isSettings = false;
 
 function loadTheme(name) {
@@ -110,7 +113,10 @@ const drawSonic = (action) => {
     if (currentSonic > 1) currentSonic = 0;
     target = theme.stoppingBuffers[currentSonic];
   } else {
-    target = theme.waitingBuffers[currentSonic];
+    const seq = theme.waitingSequence;
+    target = seq
+      ? theme.waitingBuffers[seq[currentSonic]]
+      : theme.waitingBuffers[currentSonic];
   }
 
   sonic.width = target.width;
@@ -139,10 +145,20 @@ const drawSonic = (action) => {
       currentSonic = 0;
     }
   } else {
-    if (currentSonic === theme.waitingBuffers.length - 1) {
-      currentSonic = 0;
+    const seq = theme.waitingSequence;
+    if (seq) {
+      if (currentSonic === seq.length - 1) {
+        currentSonic =
+          theme.waitingLoopStart !== undefined ? theme.waitingLoopStart : 0;
+      } else {
+        currentSonic++;
+      }
     } else {
-      currentSonic++;
+      if (currentSonic === theme.waitingBuffers.length - 1) {
+        currentSonic = 0;
+      } else {
+        currentSonic++;
+      }
     }
   }
 };
@@ -240,7 +256,8 @@ const settingsMenu = {
     },
   },
   "Active Mode": {
-    value: settings.activeMode,
+    value: !!settings.activeMode,
+    format: (v) => (v ? "On" : "Off"),
     onchange: (v) => (settings.activeMode = v),
   },
   "Twist Thresh": {
