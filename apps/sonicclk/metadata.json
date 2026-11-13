@@ -1,9 +1,9 @@
 {
   "id": "sonicclk",
   "name": "Sonic Clock",
-  "version": "0.06",
+  "version": "0.07",
   "author": "Johoseph",
-  "description": "A classic sonic clock featuring run, stop and wait animations.",
+  "description": "A Sonic the Hedgehog clock featuring run, stop and wait animations, with selectable Classic and Sonic 3 themes.",
   "icon": "app.png",
   "screenshots": [{"url":"screenshot.png"}],
   "type": "clock",
@@ -13,6 +13,10 @@
   "readme": "README.md",
   "storage": [
     {"name":"sonicclk.app.js","url":"app.js"},
-    {"name":"sonicclk.img","url":"app-icon.js","evaluate":true}
-  ]
+    {"name":"sonicclk.img","url":"app-icon.js","evaluate":true},
+    {"name":"sonicclk.settings.js","url":"settings.js"},
+    {"name":"sonicclk.theme0.js","url":"theme-classic.js"},
+    {"name":"sonicclk.theme1.js","url":"theme-sonic3.js"}
+  ],
+  "data": [{"name":"sonicclk.settings.json"}]
 }
