@@ -12,7 +12,7 @@ const settings = {
     typeof savedSettings.twistThreshold === "number"
       ? savedSettings.twistThreshold
       : 1600,
-  theme: savedSettings.theme || "Classic",
+  theme: savedSettings.theme === "Sonic 3" ? "Sonic 3" : "Sonic 8-bit",
 };
 let isSettings = false;
 
@@ -240,7 +240,7 @@ const applyTheme = (themeName) => {
   draw("reset");
 };
 
-const themes = ["Classic", "Sonic 3"];
+const themes = ["Sonic 8-bit", "Sonic 3"];
 
 const settingsMenu = {
   "": { title: "Settings" },

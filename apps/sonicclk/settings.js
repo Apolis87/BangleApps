@@ -8,14 +8,14 @@
     activeMode: saved.activeMode === true,
     twistThreshold:
       typeof saved.twistThreshold === "number" ? saved.twistThreshold : 1600,
-    theme: saved.theme || "Classic",
+    theme: saved.theme === "Sonic 3" ? "Sonic 3" : "Sonic 8-bit",
   };
 
   const writeSettings = () => {
     require("Storage").writeJSON(FILE, settings);
   };
 
-  const themes = ["Classic", "Sonic 3"];
+  const themes = ["Sonic 8-bit", "Sonic 3"];
 
   const menu = {
     "": { title: "Sonic Clock" },
