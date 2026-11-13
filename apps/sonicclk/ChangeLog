@@ -4,4 +4,4 @@
 0.04: [PATCH] Call `Bangle.setUI` when exiting settings menu, settings tap moved to top
 0.05: [PATCH] Firmware 2v11 - use `wakeOnTwist` rather than manual `setLCDPower`; Reset sonic on `fullReset`
 0.06: Use default Bangle formatter for booleans
-0.07: Added selectable themes (Sonic 8-bit and Sonic 3); authentic Sonic 3 idle animation sequence; active mode default off; prevent settings menu opening while locked; added system App Settings menu integration
+0.07: Added selectable themes (Sonic 8-bit, Sonic 2, and Sonic 3); authentic idle animation sequences; active mode default off; prevent settings menu opening while locked; added system App Settings menu integration

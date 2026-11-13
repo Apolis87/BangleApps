@@ -12,12 +12,18 @@ const settings = {
     typeof savedSettings.twistThreshold === "number"
       ? savedSettings.twistThreshold
       : 1600,
-  theme: savedSettings.theme === "Sonic 3" ? "Sonic 3" : "Sonic 8-bit",
+  theme:
+    savedSettings.theme === "Sonic 2" || savedSettings.theme === "Sonic 3"
+      ? savedSettings.theme
+      : "Sonic 8-bit",
 };
 let isSettings = false;
 
 function loadTheme(name) {
-  const file = name === "Sonic 3" ? "sonicclk.theme1.js" : "sonicclk.theme0.js";
+  let file = "sonicclk.theme0.js";
+  if (name === "Sonic 2") file = "sonicclk.theme2.js";
+  else if (name === "Sonic 3") file = "sonicclk.theme1.js";
+
   let content = require("Storage").read(file);
   if (!content && file !== "sonicclk.theme0.js") {
     content = require("Storage").read("sonicclk.theme0.js");
@@ -240,7 +246,7 @@ const applyTheme = (themeName) => {
   draw("reset");
 };
 
-const themes = ["Sonic 8-bit", "Sonic 3"];
+const themes = ["Sonic 8-bit", "Sonic 2", "Sonic 3"];
 
 const settingsMenu = {
   "": { title: "Settings" },
